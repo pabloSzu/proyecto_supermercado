@@ -1,5 +1,5 @@
 
-
+USE supermercado; 
 -- Tabla de tipos de rankings
 CREATE TABLE Ranking (
     id_ranking INT PRIMARY KEY IDENTITY,
