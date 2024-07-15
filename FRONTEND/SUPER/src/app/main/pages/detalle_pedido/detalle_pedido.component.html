@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e8df5;">
+  <div class="container-fluid">
+      <img src="{{ imageUrl }}" alt="Logo" height="30" class="me-2">
+      <a class="navbar-brand" href="/main/listado-pedidos" i18n>Portal Pedidos</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="/main/listado-pedidos" i18n>PEDIDOS</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="/main/listado-proveedores" i18n>PROVEEDORES</a>
+              </li>
+          </ul>
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" routerLink="main/login" i18n>CERRAR SESIÓN</a>
+              </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
+<div class="container mt-5 mb-5"> <!-- Agrega mb-5 para margen inferior -->
+<div class="row">
+    <div class="col-12">
+        <!-- Mostrar datos del pedido -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center m-0">Detalle del Pedido</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text" i18n><strong>ID Pedido:</strong> {{ pedido.id_pedido }}</p>
+                <p class="card-text" i18n><strong>Código de Seguimiento:</strong> {{ pedido.codigo_seguimiento }}</p>
+                <p class="card-text" i18n><strong>Fecha de Pedido:</strong> {{ pedido.fecha_pedido | date:'medium' }}</p>
+                <p class="card-text" i18n><strong>Estado:</strong> {{ pedido.codigo_estado }}</p>
+                <p class="card-text"v><strong>Evaluación:</strong> {{ pedido.evaluacion }}</p>
+                <p class="card-text" i18n><strong>Ponderación:</strong> {{ pedido.ponderacion }}</p>
+                <p class="card-text" style="color: #000; font-weight: bold;" i18n>
+                  Total: {{ pedido.total | currency:'USD':'symbol':'1.2-2' }}
+                </p>
+                
+                <button *ngIf="pedido.codigo_estado === 'ENTREGADO'"
+                class="btn btn-primary me-2" (click)="puntuar(pedido)">
+                <i class="fas fa-star"></i> PUNTUAR
+                </button>
+                &nbsp;&nbsp; <button *ngIf="pedido.codigo_estado === 'PENDIENTE'"
+                    class="btn btn-danger ms-2" (click)="cancelarPedido(pedido)">
+                    <i class="fas fa-times"></i> CANCELAR
+                </button>
+
+            </div>
+        </div>
+
+    <!-- Mostrar productos -->
+    <h2 class="text-center mb-4" i18n>Productos</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div *ngFor="let producto of productos" class="col">
+        <div class="card h-100">
+          <img [src]="obtenerImagenBase64(producto.imagen_contenido)" class="card-img-top img-fluid" alt="Imagen del Producto">
+          <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+            <p class="card-text" i18n>Código de Barras: {{ producto.codigo_barra }}</p>
+            <p class="card-text" i18n>Cantidad: {{ producto.cantidad }}</p>
+            <p class="card-text" style="color: #000; font-weight: bold;" i18n>
+              Precio Unitario: {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
+            </p>
+            <!-- Agrega más detalles del producto según sea necesario -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

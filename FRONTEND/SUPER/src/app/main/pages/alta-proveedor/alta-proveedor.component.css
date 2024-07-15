@@ -1,0 +1,23 @@
+.miniatura-imagen {
+    max-width: 50px; /* Ancho máximo de la imagen */
+    max-height: 50px; /* Altura máxima de la imagen */
+    border-radius: 5px; /* Bordes redondeados para un aspecto más estilizado */
+}
+
+.btn-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.btn-float:hover {
+    background-color: #218838;
+}

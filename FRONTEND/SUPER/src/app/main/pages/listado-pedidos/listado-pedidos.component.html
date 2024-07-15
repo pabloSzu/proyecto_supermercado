@@ -1,0 +1,106 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e8df5;">
+    <div class="container-fluid">
+        <img src="{{ imageUrl }}" alt="Logo" height="30" class="me-2">
+        <a class="navbar-brand" href="/main/listado-pedidos" i18n>Portal Pedidos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-pedidos" routerLinkActive="active" i18n>PEDIDOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-proveedores" i18n>PROVEEDORES</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="main/login" i18n>CERRAR SESIÓN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <div style="font-size: 2em;">
+                <h2 style="font-size: 1.5em; background-color: #f3f3f185; padding: 10px;" class="text-center mb-0" i18n>Listado de Pedidos</h2>
+            </div>
+
+
+            <div class="mt-4 mb-3">
+                <label style="font-size: 1.2em; font-weight: bold;" i18n>Filtrar por:</label>
+            <!-- Buscar pedidos -->
+            <div class="mt-4 mb-3">
+                <input type="text" class="form-control" placeholder="Buscar pedidos (código de seguimiento/nombre de proveedor/estado)" [(ngModel)]="searchTerm" i18n-placeholder="@@PipePedidosPlaceholder">
+            </div>
+            <!-- Filtrar por estados -->
+                <div class="d-flex flex-wrap align-items-center">
+                    <div class="form-check mt-2 me-4" *ngFor="let estado of estadoFiltro | keyvalue">
+                        <input class="form-check-input" type="checkbox" [id]="estado.key" [checked]="estado.value" (change)="toggleEstadoFiltro(estado.key)"
+                            style="width: 20px; height: 20px; margin-right: 5px;">
+                        <label class="form-check-label ms-2" [for]="estado.key"
+                            style="font-size: 1.1em; cursor: pointer;">{{ estado.key }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de pedidos -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th i18n>Proveedor</th>
+                            <th i18n>Estado</th>
+                            <th i18n>Fecha de Entrega Prevista</th>
+                            <th i18n>Fecha de Pedido</th>
+                            <th i18n>Valor</th>
+                            <th i18n>Ponderación</th>
+                            <th i18n>Total</th>
+                            <th i18n>Código de Seguimiento</th>
+                            <th i18n>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pedido of pedidos | searchPedidos: searchTerm | searchPedidosCodigoEstado: obtenerEstadosSeleccionados()">
+                            <td>
+                                <a [routerLink]="['/main/proveedor', pedido.id_proveedor]" class="provider-link d-flex align-items-center">
+                                    <i class="fas fa-search ml-2" aria-hidden="true"></i>
+                                    <span>{{ pedido.nombre_proveedor }}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <span [ngClass]="getEstadoClass(pedido.codigo_estado)">{{ getEstadoTexto(pedido.codigo_estado) }}</span>
+                            </td>
+                            <td>{{ pedido.fecha_entrega_prevista | date:'short' }}</td>
+                            <td>{{ pedido.fecha_pedido | date:'short' }}</td>
+                            <td>{{ pedido.evaluacion }}</td>
+                            <td>{{ pedido.ponderacion }}</td>
+                            <td>{{ pedido.total }}</td>
+                            <td>
+                                <a [routerLink]="['/main/detalle_pedido', pedido.id_pedido]" class="provider-link d-flex align-items-center">
+                                    <i class="fas fa-search ml-2" aria-hidden="true"></i>
+                                    <span>{{ pedido.codigo_seguimiento }}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <button *ngIf="pedido.codigo_estado === 'ENTREGADO'" class="btn btn-primary me-2" (click)="puntuar(pedido)" i18n>
+                                                     <i class="fas fa-star"></i> PUNTUAR
+                                    </button>
+                 &nbsp; &nbsp;      <button *ngIf="pedido.codigo_estado === 'PENDIENTE'" class="btn btn-danger ms-2" (click)="cancelarPedido(pedido)" i18n>
+                                        <i class="fas fa-times"></i> CANCELAR
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

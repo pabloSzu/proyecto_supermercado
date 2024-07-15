@@ -1,0 +1,23 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .radio-inline {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-inline input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  .modal-footer {
+    margin-top: 20px;
+  }
+  

@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e8df5;">
+    <div class="container-fluid">
+        <img src="{{ imageUrl }}" alt="Logo" height="30" class="me-2">
+        <a class="navbar-brand" href="/main/listado-pedidos">Portal Pedidos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-pedidos">PEDIDOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-proveedores">PROVEEDORES</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="main/login"  i18n>CERRAR SESIÓN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Botón "Volver al listado de proveedores" -->
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-secondary" routerLink="/main/listado-proveedores" i18n>
+                <i class="fas fa-arrow-left me-2"></i> Volver al listado de proveedores
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <!-- Título con el nombre del proveedor -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-4" style="background-color: #f0f0f0; padding: 10px;">{{ configuracion.nombre }}</h2>
+            </div>
+        </div>
+        
+        <div class="row align-items-center">
+            <!-- Puntaje a la derecha dentro de un círculo -->
+            <div class="col-md-2 text-center">
+                <h4 i18n>PUNTAJE PROMEDIO</h4>
+                <div class="circle" [style.background-color]="getCircleColor(configuracion.puntaje)">
+                    <h4 style="margin: 0;">{{ configuracion.puntaje | number:'1.1-1'}}</h4>
+                </div>
+                <h5 style="color: gray; font-size: 0.8em; margin-top: 5px;" i18n>Promedio de días de Demora:</h5>
+                <h3 style="color: gray; font-size: 1.5em; margin-top: 5px;">{{ configuracion.promedio_dias_entrega | number:'1.2-2'}}</h3>
+            </div>
+            
+            <!-- Información del Proveedor -->
+            <div class="col-md-10 mt-4"> <!-- Añadido margen top para separación -->
+                <h4 class="text-left" i18n>Información del Proveedor</h4>
+                <table class="table table-bordered table-sm" style="background-color: #f0f0f0;">
+                    <thead>
+                        <tr>
+                            <th i18n>Dato</th>
+                            <th i18n>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td i18n>Cuil</td>
+                            <td>{{ configuracion.cuil }}</td>
+                        </tr>
+                        <tr>
+                            <td i18n>Email</td>
+                            <td>{{ configuracion.mail }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Ranking -->
+        <div class="col-12 mt-5"> <!-- Añadido margen top adicional para separación -->
+            <div *ngIf="evaluaciones.length > 0" class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Ranking</h2>
+                </div>
+                <table class="table table-bordered table-sm mb-4" style="font-size: 0.875em;"> <!-- Ajuste de clase para hacer la tabla más pequeña -->
+                    <thead class="table-dark">
+                        <tr>
+                            <th i18n>Evaluación</th>
+                            <th i18n>Ponderación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of evaluaciones; let i = index">
+                            <td>{{ item.evaluacion }}</td>
+                            <td>
+                                <form [formGroup]="formRanking[i]" class="mb-3">
+                                    <select class="form-select form-select-sm" formControlName="ponderacion" (change)="onChangePonderacion(item, i)">
+                                        <option *ngFor="let value of [0, 1, 2, 3, 4, 5]" [value]="value">{{ value }}</option>
+                                    </select>
+                                    <div *ngIf="formRanking[i].get('ponderacion')!.invalid && formRanking[i].get('ponderacion')!.touched" class="text-danger" i18n>
+                                        La ponderación es requerida y debe estar entre 0 y 10.
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Productos -->
+            <h2 class="mb-4" i18n>Productos</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div *ngFor="let producto of productos" class="col">
+                    <div class="card h-100">
+                        <img [src]="obtenerImagenBase64(producto.imagen_contenido)" class="card-img-top img-fluid" alt="Imagen del Producto">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ producto.nombre_producto }}</h5>
+                            <p class="card-text">Código de Barras: {{ producto.codigo_barra }}</p>
+                            <p class="card-text" style="color: #000; font-weight: bold;" i18n>
+                                Precio Unitario: {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
+                            </p>
+                            <!-- Agrega más detalles del producto según sea necesario -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

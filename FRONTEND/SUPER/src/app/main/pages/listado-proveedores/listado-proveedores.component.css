@@ -1,0 +1,72 @@
+.switch-lg .form-check-input {
+    width: 3em;
+    height: 1.5em;
+}
+
+.switch-lg .form-check-input:checked {
+    background-color: #28a745; /* Verde */
+    border-color: #28a745;
+}
+
+.switch-lg .form-check-input:not(:checked) {
+    background-color: #dc3545; /* Rojo */
+    border-color: #dc3545;
+}
+
+.switch-lg .form-check-input:focus {
+    box-shadow: none;
+}
+
+.switch-lg .form-check-input:before {
+    height: 1.25em;
+    width: 1.25em;
+}
+
+.switch-on {
+    background-color: #28a745 !important; /* Verde */
+    border-color: #28a745 !important;
+}
+
+.switch-off {
+    background-color: #dc3545 !important; /* Rojo */
+    border-color: #dc3545 !important;
+}
+
+.align-middle {
+    vertical-align: middle !important;
+}
+.btn-info {
+    background-color: #4e8df5;
+    border-color: #4e8df5;
+}
+
+.btn-info:hover {
+    background-color: #3c72c9;
+    border-color: #3c72c9;
+}
+
+.btn-info i {
+    margin-right: 5px;
+}
+
+.provider-link {
+    display: flex;
+    align-items: center;
+}
+
+.provider-link i {
+    margin-right: 5px;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 80%;
+}
+

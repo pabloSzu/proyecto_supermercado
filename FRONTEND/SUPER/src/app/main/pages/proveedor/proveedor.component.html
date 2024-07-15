@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e8df5;">
+    <div class="container-fluid">
+        <img src="{{ imageUrl }}" alt="Logo" height="30" class="me-2">
+        <a class="navbar-brand" href="/main/listado-pedidos">Portal Pedidos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-pedidos">PEDIDOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/main/listado-proveedores">PROVEEDORES</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="main/login">CERRAR SESIÓN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Botón "Volver al listado de pedidos" -->
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-secondary" routerLink="/main/listado-pedidos">
+                <i class="fas fa-arrow-left me-2"></i> Volver al listado de pedidos
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Título con el nombre del proveedor -->
+            <h2 class="text-center mb-4" style="background-color: #f0f0f0; padding: 10px;">{{ estadistica[0]?.nombre }}</h2>
+        </div>
+    </div>
+    
+    <div class="row align-items-center">
+        <!-- Puntaje a la derecha dentro de un círculo -->
+        <div class="col-md-2 text-center">
+            <h4>PUNTAJE PROMEDIO</h4>
+            <div class="circle" [style.background-color]="getCircleColor(estadistica[0]?.puntaje)">
+                <h4 style="margin: 0;">{{ estadistica[0]?.puntaje | number:'1.1-1'}}</h4>
+            </div>
+            <h5 style="color: gray; font-size: 0.8em; margin-top: 5px;">Promedio de días de Demora:</h5>
+            <h3 style="color: gray; font-size: 1.5em; margin-top: 5px;">{{ estadistica[0]?.promedio_dias_entrega | number:'1.2-2'}}</h3>
+        </div>
+        
+        <!-- Tabla pequeña con valores de ejemplo -->
+        <div class="col-md-10">
+            <h4 class="text-left">Información del Proveedor</h4>
+            <table class="table table-bordered table-sm" style="background-color: #f0f0f0;">
+                <thead>
+                    <tr>
+                        <th>Dato</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cuil</td>
+                        <td>{{ estadistica[0]?.cuil }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ estadistica[0]?.mail }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Separador -->
+    <hr class="my-4">
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <h2 class="text-left mb-4">ULTIMOS PEDIDOS</h2>
+            <div class="table-responsive" style="max-width: 75%; margin: 0 auto;">
+                <table class="table table-sm table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Fecha de Pedido</th>
+                            <th>Código de Seguimiento</th>
+                            <th>Estado</th>
+                            <th>Fecha de Entrega Prevista</th>
+                            <th class="text-center">Valor</th>
+                            <th class="text-center">Ponderación</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pedido of pedidos">
+                            <td>{{ pedido.fecha_pedido | date:'short' }}</td>
+                            <td>{{ pedido.codigo_seguimiento }}</td>  
+                            <td>{{ getEstadoTexto(pedido.codigo_estado) }}</td>
+                            <td>{{ pedido.fecha_entrega_prevista | date:'short' }}</td>
+                            <td class="text-center">{{ pedido.evaluacion }}</td>
+                            <td class="text-center">{{ pedido.ponderacion }}</td>
+                            <td class="card-text" style="color: #000; font-weight: bold;">
+                                {{ pedido.total | currency:'USD':'symbol':'1.2-2' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

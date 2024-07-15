@@ -1,0 +1,12 @@
+.provider-link {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.provider-link:hover {
+    text-decoration: none; /* Elimina el subrayado en hover si es necesario */
+}
+
+.provider-link i {
+    font-size: 1rem; /* Ajusta el tamaño del ícono según sea necesario */
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
