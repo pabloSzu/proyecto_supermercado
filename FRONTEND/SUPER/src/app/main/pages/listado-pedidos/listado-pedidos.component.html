@@ -80,7 +80,7 @@
                             <td>{{ pedido.fecha_pedido | date:'short' }}</td>
                             <td>{{ pedido.evaluacion }}</td>
                             <td>{{ pedido.ponderacion }}</td>
-                            <td>{{ pedido.total }}</td>
+                            <td style="color: #000; font-weight: bold;">{{ pedido.total | currency:'USD':'symbol':'1.2-2'  }}</td>
                             <td>
                                 <a [routerLink]="['/main/detalle_pedido', pedido.id_pedido]" class="provider-link d-flex align-items-center">
                                     <i class="fas fa-search ml-2" aria-hidden="true"></i>

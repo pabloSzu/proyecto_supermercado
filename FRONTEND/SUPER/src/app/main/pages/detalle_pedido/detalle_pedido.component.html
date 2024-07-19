@@ -30,25 +30,25 @@
         <!-- Mostrar datos del pedido -->
         <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h2 class="text-center m-0">Detalle del Pedido</h2>
+                <h2 class="text-center m-0" i18n>Detalle del Pedido</h2>
             </div>
             <div class="card-body">
-                <p class="card-text" i18n><strong>ID Pedido:</strong> {{ pedido.id_pedido }}</p>
-                <p class="card-text" i18n><strong>Código de Seguimiento:</strong> {{ pedido.codigo_seguimiento }}</p>
-                <p class="card-text" i18n><strong>Fecha de Pedido:</strong> {{ pedido.fecha_pedido | date:'medium' }}</p>
-                <p class="card-text" i18n><strong>Estado:</strong> {{ pedido.codigo_estado }}</p>
-                <p class="card-text"v><strong>Evaluación:</strong> {{ pedido.evaluacion }}</p>
-                <p class="card-text" i18n><strong>Ponderación:</strong> {{ pedido.ponderacion }}</p>
-                <p class="card-text" style="color: #000; font-weight: bold;" i18n>
-                  Total: {{ pedido.total | currency:'USD':'symbol':'1.2-2' }}
+                <p class="card-text"><strong><span i18n>ID Pedido:</span></strong> {{ pedido.id_pedido }}</p>
+                <p class="card-text"><strong><span i18n>Código de Seguimiento:</span></strong> {{ pedido.codigo_seguimiento }}</p>
+                <p class="card-text"><strong><span i18n>Fecha de Pedido:</span></strong> {{ pedido.fecha_pedido | date:'medium' }}</p>
+                <p class="card-text"><strong><span i18n>Estado:</span></strong> {{ pedido.codigo_estado }}</p>
+                <p class="card-text"><strong><span i18n>Evaluación:</span></strong> {{ pedido.evaluacion }}</p>
+                <p class="card-text"><strong><span i18n>Ponderación:</span></strong> {{ pedido.ponderacion }}</p>
+                <p class="card-text" style="color: #000; font-weight: bold;">
+                  <span i18n>Total: </span>{{ pedido.total | currency:'USD':'symbol':'1.2-2' }}
                 </p>
                 
                 <button *ngIf="pedido.codigo_estado === 'ENTREGADO'"
-                class="btn btn-primary me-2" (click)="puntuar(pedido)">
+                class="btn btn-primary me-2" (click)="puntuar(pedido)" i18n>
                 <i class="fas fa-star"></i> PUNTUAR
                 </button>
                 &nbsp;&nbsp; <button *ngIf="pedido.codigo_estado === 'PENDIENTE'"
-                    class="btn btn-danger ms-2" (click)="cancelarPedido(pedido)">
+                    class="btn btn-danger ms-2" (click)="cancelarPedido(pedido)" i18n>
                     <i class="fas fa-times"></i> CANCELAR
                 </button>
 
@@ -63,10 +63,10 @@
           <img [src]="obtenerImagenBase64(producto.imagen_contenido)" class="card-img-top img-fluid" alt="Imagen del Producto">
           <div class="card-body">
             <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-            <p class="card-text" i18n>Código de Barras: {{ producto.codigo_barra }}</p>
-            <p class="card-text" i18n>Cantidad: {{ producto.cantidad }}</p>
-            <p class="card-text" style="color: #000; font-weight: bold;" i18n>
-              Precio Unitario: {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
+            <p class="card-text"><span i18n>Código de Barras: </span>{{ producto.codigo_barra }}</p>
+            <p class="card-text"><span i18n>Cantidad: </span>{{ producto.cantidad }}</p>
+            <p class="card-text" style="color: #000; font-weight: bold;">
+              <span i18n>Precio Unitario:</span> {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
             </p>
             <!-- Agrega más detalles del producto según sea necesario -->
           </div>

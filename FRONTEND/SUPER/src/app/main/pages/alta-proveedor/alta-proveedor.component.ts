@@ -42,7 +42,7 @@ export class AltaProveedorComponent implements OnInit {
 
         if (nombreUrlExistente) {
           console.log('La URL ya existe en Nuestros Proveedores. Por favor, elija otro.');
-          this.mensajeError = 'La URL ya existe en Nuestros Proveedores.';
+          this.mensajeError = $localize`La URL ya existe en Nuestros Proveedores.`;
           return;
         }
 
@@ -73,14 +73,14 @@ export class AltaProveedorComponent implements OnInit {
             },
             error: (error) => {
               console.log("Error al obtener los datos del proveedor:", error);
-              this.mensajeError = 'El nombre URL no existe.';
+              this.mensajeError = $localize`El nombre URL no existe.`;
             }
           });
         }
       },
       error: (error) => {
         console.log("Error al obtener los proveedores:", error);
-        this.mensajeError = 'El nombre URL no existe.';
+        this.mensajeError = $localize`El nombre URL no existe.`;
       }
     });
   }
@@ -122,21 +122,21 @@ export class AltaProveedorComponent implements OnInit {
       };
       console.log('Datos de Registro:', JSON.stringify(datosRegistro));
           Swal.fire({
-            title: '¿Seguro que deseas agregar al proveedor ?',
+            title: $localize`¿Seguro que deseas agregar al proveedor ?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, agregar proveedor',
-            cancelButtonText: 'No, no hacer nada'
+            confirmButtonText: $localize`Sí, agregar proveedor`,
+            cancelButtonText: $localize`No, no hacer nada`
           }).then((result) => {
             if (result.isConfirmed) { 
               this._service.insertProveedorNuevo(datosRegistro).subscribe({
               next: (proveedorResponse) => {
               console.log('Datos del proveedor nuevo:', JSON.stringify(proveedorResponse));  
             Swal.fire(
-                'Se ha agregado al proveedor',
-                'El proveedor  ha sido agregado. ',
+                $localize`Se ha agregado al proveedor`,
+                $localize`El proveedor  ha sido agregado. `,
                 'success'
               );
             this._router.navigate(['main/listado-proveedores']);

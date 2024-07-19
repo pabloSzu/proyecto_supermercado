@@ -37,6 +37,7 @@ export class ModalPuntuarComponent implements OnInit {
   private initializeForm(): void {
     this.form = this._fb.group({
       id_proveedor: [{ value: this.pedido?.id_proveedor, disabled: true }],
+      nombre_proveedor: [{ value: this.pedido?.nombre_proveedor, disabled: true }],
       codigo_seguimiento: [{ value: this.pedido?.codigo_seguimiento, disabled: true }],
       evaluacion: [this.pedido?.evaluacion || '', Validators.required],
       ponderacion: [this.pedido?.ponderacion || '', Validators.required]
@@ -86,7 +87,7 @@ export class ModalPuntuarComponent implements OnInit {
         error: (error) => {
           console.log(error);
           console.log("Error en la evaluación");
-          this.errorMessage = 'Error en la evaluación. Por favor, intenta nuevamente.';
+          this.errorMessage = $localize`Error en la evaluación. Por favor, intenta nuevamente.`;
           this.form.reset();
           this.submitted = false;
         }

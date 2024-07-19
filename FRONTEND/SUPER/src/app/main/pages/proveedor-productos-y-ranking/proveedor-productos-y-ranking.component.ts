@@ -111,15 +111,15 @@ export class ProveedorProductosYRankingComponent implements OnInit {
         next: () => {
           Swal.fire({
             icon: 'success',
-            title: 'Ponderación actualizada',
-            text: 'La ponderación ha sido actualizada correctamente.'
+            title: $localize`Ponderación actualizada`,
+            text: $localize`La ponderación ha sido actualizada correctamente.`
           });
         },
         error: (err) => {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Hubo un error al actualizar la ponderación. Inténtelo de nuevo más tarde.'
+            text: $localize`Hubo un error al actualizar la ponderación. Inténtelo de nuevo más tarde.`
           });
           console.error('Error updating ponderacion data', err);
         }

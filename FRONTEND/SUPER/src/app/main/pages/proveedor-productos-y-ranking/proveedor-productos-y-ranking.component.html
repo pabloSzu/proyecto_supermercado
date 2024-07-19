@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4e8df5;">
     <div class="container-fluid">
         <img src="{{ imageUrl }}" alt="Logo" height="30" class="me-2">
-        <a class="navbar-brand" href="/main/listado-pedidos">Portal Pedidos</a>
+        <a class="navbar-brand" href="/main/listado-pedidos" i18n>Portal Pedidos</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,10 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/main/listado-pedidos">PEDIDOS</a>
+                    <a class="nav-link" routerLink="/main/listado-pedidos" i18n>PEDIDOS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/main/listado-proveedores">PROVEEDORES</a>
+                    <a class="nav-link" routerLink="/main/listado-proveedores" i18n>PROVEEDORES</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -118,10 +118,12 @@
                         <img [src]="obtenerImagenBase64(producto.imagen_contenido)" class="card-img-top img-fluid" alt="Imagen del Producto">
                         <div class="card-body">
                             <h5 class="card-title">{{ producto.nombre_producto }}</h5>
-                            <p class="card-text">Código de Barras: {{ producto.codigo_barra }}</p>
-                            <p class="card-text" style="color: #000; font-weight: bold;" i18n>
-                                Precio Unitario: {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
-                            </p>
+                            <p class="card-text">
+                                <span i18n>Código de Barras:</span> {{ producto.codigo_barra }}
+                              </p>
+                              <p class="card-text" style="color: #000; font-weight: bold;">
+                                <span i18n>Precio Unitario:</span> {{ producto.precio_unitario | currency:'USD':'symbol':'1.2-2' }}
+                              </p>
                             <!-- Agrega más detalles del producto según sea necesario -->
                         </div>
                     </div>

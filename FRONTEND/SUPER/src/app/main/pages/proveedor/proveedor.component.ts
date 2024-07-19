@@ -49,15 +49,15 @@ export class ProveedorComponent implements OnInit {
   getEstadoTexto(codigoEstado: string): string {
     switch (codigoEstado) {
       case 'PENDIENTE':
-        return 'PENDIENTE';
+        return $localize`PENDIENTE`;
       case 'EN_PROCESO':
-        return 'EN PROCESO';
+        return $localize`EN PROCESO`;
       case 'ENVIADO':
-        return 'ENVIADO';
+        return $localize`ENVIADO`;
       case 'ENTREGADO':
-        return 'ENTREGADO';
+        return $localize`ENTREGADO`;
       case 'CANCELADO':
-        return 'CANCELADO';
+        return $localize`CANCELADO`;
       default:
         return '';
     }
