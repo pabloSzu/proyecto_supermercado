@@ -198,15 +198,17 @@ public class PedidosAutomaticosService {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     public ResponseEntity<String> realizarPedidos() {
-    	
-    //actualizo los estados de los pedidos y los precios de los productos
-    	actualizarPedidos();
-    	actualizarProductos();
-    	
-    	
+        // Actualizo los estados de los pedidos y los precios de los productos
+        actualizarPedidos();
+        actualizarProductos();
+
         try {
             // Obtener el JSON de todos los productos a pedir, sus cantidades, y a qué proveedor realizarlo
             String jsonResponse = repository.realizarPedidos();
+
+            if (jsonResponse == null) {
+                return new ResponseEntity<>("Todos los productos tienen stock. No se realizaron pedidos nuevos", HttpStatus.OK);
+            }
 
             Gson gson = new Gson();
 
@@ -247,6 +249,9 @@ public class PedidosAutomaticosService {
                 // Realizar el pedido y obtener la respuesta
                 String respuestaInsercionPedidosProveedores = client.insertPedidos(token, url, jsonPedidos);
 
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAA" + respuestaInsercionPedidosProveedores);
+                
+                
                 // Parsear la respuesta a una lista de mapas
                 List<Map<String, Object>> respuestaList = gson.fromJson(respuestaInsercionPedidosProveedores, new TypeToken<List<Map<String, Object>>>() {}.getType());
 
