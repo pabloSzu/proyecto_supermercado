@@ -14,6 +14,7 @@ export class ListadoPedidosComponent implements OnInit {
 
   imageUrl: string = '../../assets/splash_vertical.png';
   pedidos: any[] = [];
+  pedidosOriginales: any[] = [];
   searchTerm: string = '';
   estadoFiltro: { [key: string]: boolean } = {
     PENDIENTE: false,
@@ -32,6 +33,8 @@ export class ListadoPedidosComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       this.pedidos = data['pedidos']; // Asegúrate de que el nombre coincide con la clave en la configuración de la ruta
+      this.pedidosOriginales = [...this.pedidos]; // Guarda una copia de los pedidos originales
+      this.aplicarFiltro(); // Aplica el filtro al inicio
     });
   }
 
@@ -55,7 +58,13 @@ export class ListadoPedidosComponent implements OnInit {
               $localize`El pedido '` + pedido["codigo_seguimiento"] + `' ha sido cancelado. `,
               'success'
             );
-            this.actualizarPedidos(); // Actualiza los pedidos después de cancelar
+
+            // Actualiza el estado del pedido en la lista
+            const index = this.pedidosOriginales.findIndex(p => p.codigo_seguimiento === pedido.codigo_seguimiento);
+            if (index !== -1) {
+              this.pedidosOriginales[index].codigo_estado = 'CANCELADO';
+              this.aplicarFiltro(); // Aplica el filtro después de actualizar
+            }
           },
           error: (error) => {
             console.log(error);
@@ -74,6 +83,8 @@ export class ListadoPedidosComponent implements OnInit {
     this._service.getPedidos().subscribe({
       next: (pedidos) => {
         this.pedidos = pedidos;
+        this.pedidosOriginales = [...pedidos]; // Actualiza la copia original de los pedidos
+        this.aplicarFiltro(); // Aplica el filtro después de actualizar los pedidos
       },
       error: (error) => {
         console.log("Error al actualizar los pedidos", error);
@@ -133,18 +144,16 @@ export class ListadoPedidosComponent implements OnInit {
     // Verificar si no hay estados seleccionados
     if (estadosSeleccionados.length === 0) {
         // Mostrar todos los pedidos
-        this.pedidos = this.route.snapshot.data['pedidos'];
+        this.pedidos = [...this.pedidosOriginales];
     } else {
         // Filtrar los pedidos basados en los estados seleccionados
-        this.pedidos = this.route.snapshot.data['pedidos']
+        this.pedidos = this.pedidosOriginales
                          .filter((pedido: any) => estadosSeleccionados.includes(pedido.codigo_estado));
     }
-}
-
+  }
 
   obtenerEstadosSeleccionados(): string[] {
     return Object.keys(this.estadoFiltro)
                  .filter(key => this.estadoFiltro[key]);
   }
-
 }
