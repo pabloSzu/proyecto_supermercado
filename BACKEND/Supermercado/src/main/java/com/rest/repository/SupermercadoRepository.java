@@ -654,5 +654,41 @@ public class SupermercadoRepository {
 		    }
 		}
 	 
+		
+		
+		
+		
+		
+		
+
+
+		 
+		@SuppressWarnings("unchecked")
+	    public String getObtenerCantidadPedidosPorProveedor() {
+			try {
+		        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTpl);
+
+				// Add the JSON string to the SqlParameterSource
+				SqlParameterSource in = new MapSqlParameterSource();
+	
+				// Configure the SimpleJdbcCall
+				Map<String, Object> out = jdbcCall.withProcedureName("ObtenerCantidadPedidosPorProveedor")
+					.withSchemaName("dbo")
+					.execute(in);
+				List<Map<String, Object>> resultSet = (List<Map<String, Object>>) out.get("#result-set-1");
+
+				// Obtener el resultado devuelto por el procedimiento almacenado
+				if (resultSet != null && !resultSet.isEmpty()) {
+					Map<String, Object> firstRow = resultSet.get(0);
+					return (String) firstRow.get("cantidad_pedidos_proveedores");
+				} else {
+					throw new RuntimeException("No existen esos datos.");
+				}
+			} catch (Exception e) {
+				throw new RuntimeException("Error ejecutando el procedimiento almacenado", e);
+			}
+}
+
+
 	
 }

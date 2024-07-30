@@ -24,6 +24,15 @@ export class ListadoPedidosComponent implements OnInit {
     CANCELADO: false
   };
 
+  // Mapa para convertir códigos de estado a texto legible
+  private estadoTextoMap: { [key: string]: string } = {
+    PENDIENTE: $localize`PENDIENTE`,
+    EN_PROCESO: $localize`EN PROCESO`,
+    ENVIADO: $localize`ENVIADO`,
+    ENTREGADO: $localize`ENTREGADO`,
+    CANCELADO: $localize`CANCELADO`
+  };
+
   constructor(
     private route: ActivatedRoute,
     private _service: ServiciosResourceService,
@@ -32,8 +41,8 @@ export class ListadoPedidosComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
-      this.pedidos = data['pedidos']; // Asegúrate de que el nombre coincide con la clave en la configuración de la ruta
-      this.pedidosOriginales = [...this.pedidos]; // Guarda una copia de los pedidos originales
+      this.pedidos = Array.isArray(data['pedidos']) ? data['pedidos'] : []; // Verificar que sea un array
+      this.pedidosOriginales = [...this.pedidos];
       this.aplicarFiltro(); // Aplica el filtro al inicio
     });
   }
@@ -82,8 +91,8 @@ export class ListadoPedidosComponent implements OnInit {
   actualizarPedidos(): void {
     this._service.getPedidos().subscribe({
       next: (pedidos) => {
-        this.pedidos = pedidos;
-        this.pedidosOriginales = [...pedidos]; // Actualiza la copia original de los pedidos
+        this.pedidos = Array.isArray(pedidos) ? pedidos : []; // Verificar que sea un array
+        this.pedidosOriginales = [...this.pedidos];
         this.aplicarFiltro(); // Aplica el filtro después de actualizar los pedidos
       },
       error: (error) => {
@@ -115,20 +124,7 @@ export class ListadoPedidosComponent implements OnInit {
   }
 
   getEstadoTexto(codigoEstado: string): string {
-    switch (codigoEstado) {
-      case 'PENDIENTE':
-        return $localize`PENDIENTE`;
-      case 'EN_PROCESO':
-        return $localize`EN PROCESO`;
-      case 'ENVIADO':
-        return $localize`ENVIADO`;
-      case 'ENTREGADO':
-        return $localize`ENTREGADO`;
-      case 'CANCELADO':
-        return $localize`CANCELADO`;
-      default:
-        return '';
-    }
+    return this.estadoTextoMap[codigoEstado] || codigoEstado;
   }
 
   toggleEstadoFiltro(key: string): void {

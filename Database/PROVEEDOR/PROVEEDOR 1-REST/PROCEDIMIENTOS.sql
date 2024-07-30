@@ -201,7 +201,7 @@ BEGIN
 END;
 GO
 /*
-EXECUTE OBTENER_PEDIDO 
+EXECUTE CANCELAR_PEDIDO 
     @json = '{"codigo_seguimiento":"ABCD123456"}'
 GO
 */
@@ -308,6 +308,8 @@ BEGIN
     SELECT @id_pedido = id_pedido FROM @nuevo_id_pedido;
 END;
 GO
+
+
 CREATE OR ALTER PROCEDURE [dbo].[INSERTAR_DETALLE]
     @json NVARCHAR(MAX)
 AS

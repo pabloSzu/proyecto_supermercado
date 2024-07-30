@@ -582,13 +582,20 @@ EXEC sp_InsertarPedido
 	Delete from RANKING 
 	Delete from PRODUCTO_PROVEEDOR where id_proveedor=5
 	Delete from PROVEEDORES  where id_proveedor=5
-	*/
-	update pedidos set codigo_estado='PENDIENTE' where id_pedido=5
-	update productos set stock_optimo=100, stock_actual=0
+	update pedidos set codigo_estado='ENTREGADO' where id_pedido=39
+	update productos set stock_actual=0
 	
 	select * from proveedores
+	select * from PRODUCTOS
 	select * from pedidos
+	select * from proveedores
 	select * from detalle_pedido
-	select * from PRODUCTO_proveedor where id_proveedor = 5
+	select * from PRODUCTO_proveedor order by id_proveedor where id_proveedor = 5
 	select * from proveedores where id_proveedor = 5
 	select * from detalle_pedido
+	USE PROVEEDOR1
+	insert into PRODUCTOS(nombre,precio,codigo_barra,fecha_actualizacion_precio) values ('Macetas',	100, '999999',	'2024-06-25 00:00:00.000')
+	Select * from productos
+	Select * from DETALLE_PEDIDO
+	
+	*/

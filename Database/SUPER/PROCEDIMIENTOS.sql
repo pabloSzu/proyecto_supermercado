@@ -388,7 +388,6 @@ BEGIN
         SELECT 
             p.codigo_barra,
             p.nombre AS nombre,
-            p.imagen_nombre,
             p.imagen_contenido,
             p.stock_actual,
             p.stock_optimo,
@@ -584,7 +583,6 @@ BEGIN
             dp.cantidad,
             dp.precio_unitario,
             p.nombre AS nombre_producto,
-            p.imagen_nombre,
             p.imagen_contenido AS imagen_contenido,
             p.stock_actual,
             p.stock_optimo
@@ -1030,7 +1028,11 @@ BEGIN
     DROP TABLE #ProductosProveedorTemp;
 END
 GO
-
+/*
+EXEC ActualizarProductosProveedorDesdeJson
+@json = '[{"codigo_barra":"001001","nombre":"Mermelada","precio":100,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":1},{"codigo_barra":"002002","nombre":"Cafe","precio":200,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":1},{"codigo_barra":"003003","nombre":"Coca-cola","precio":300,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":1},{"codigo_barra":"004004","nombre":"Lavandina","precio":400,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":1},{"codigo_barra":"999999","nombre":"Macetas","precio":100,"fecha_actualizacion_precio":"2023-03-25T00:00:00","id_proveedor":1},{"codigo_barra":"005005","nombre":"Leche","precio":100,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":2},{"codigo_barra":"006006","nombre":"Pan lactal","precio":200,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":2},{"codigo_barra":"007007","nombre":"Cereales","precio":300,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":2},{"codigo_barra":"008008","nombre":"Dentifrico","precio":400,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":2},{"codigo_barra":"001001","nombre":"Mermelada","precio":400,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":3},{"codigo_barra":"005005","nombre":"Leche","precio":100,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":3},{"codigo_barra":"006006","nombre":"Pan lactal","precio":200,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":3},{"codigo_barra":"007007","nombre":"Cereales","precio":300,"fecha_actualizacion_precio":"2024-06-25T00:00:00","id_proveedor":3}]'
+GO
+*/
 
 
 CREATE OR ALTER PROCEDURE SeleccionarMejorProveedorPorProducto
@@ -1054,7 +1056,8 @@ BEGIN
            pp.id_proveedor,
            pp.codigo_barra,
            CASE
-               WHEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(dp.cantidad), 0)) > 0 THEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(dp.cantidad), 0))
+               WHEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(CASE WHEN ped.codigo_estado NOT IN ('CANCELADO', 'ENTREGADO') THEN dp.cantidad ELSE 0 END), 0)) > 0 
+               THEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(CASE WHEN ped.codigo_estado NOT IN ('CANCELADO', 'ENTREGADO') THEN dp.cantidad ELSE 0 END), 0))
                ELSE 0
            END AS cantidad_requerida
     FROM PRODUCTO_PROVEEDOR pp
@@ -1062,15 +1065,23 @@ BEGIN
     LEFT JOIN DETALLE_PEDIDO dp ON p.codigo_barra = dp.codigo_barra
     LEFT JOIN PEDIDOS ped ON dp.id_pedido = ped.id_pedido
     LEFT JOIN PROVEEDORES pr ON pp.id_proveedor = pr.id_proveedor -- Join para obtener el puntaje del proveedor
-    WHERE (ped.codigo_estado IN ('PENDIENTE', 'EN_PROCESO', 'ENVIADO', 'ENTREGADO') OR ped.codigo_estado IS NULL) AND pr.habilitado = 1
+    WHERE pr.habilitado = 1
     GROUP BY pp.id_proveedor, pp.codigo_barra, p.stock_optimo, p.stock_actual, pr.puntaje
+    HAVING CASE
+               WHEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(CASE WHEN ped.codigo_estado NOT IN ('CANCELADO', 'ENTREGADO') THEN dp.cantidad ELSE 0 END), 0)) > 0 
+               THEN p.stock_optimo - (p.stock_actual + ISNULL(SUM(CASE WHEN ped.codigo_estado NOT IN ('CANCELADO', 'ENTREGADO') THEN dp.cantidad ELSE 0 END), 0))
+               ELSE 0
+           END > 0 -- Filtra productos con cantidad mayor que 0
     ORDER BY ROW_NUMBER() OVER (PARTITION BY pp.codigo_barra 
                                 ORDER BY MIN(pp.precio) ASC, 
                                          pr.puntaje DESC, 
                                          NEWID()); -- Ordenar por precio ascendente, puntaje descendente y aleatoriedad
 
-    -- Construcción del JSON de salida
-    SELECT @Json = JSON_QUERY((SELECT id_proveedor, codigo_barra, cantidad FROM #Resultado FOR JSON AUTO));
+    -- Construcción del JSON de salida excluyendo productos con cantidad 0
+    SELECT @Json = JSON_QUERY((SELECT id_proveedor, codigo_barra, cantidad
+                               FROM #Resultado
+                               WHERE cantidad > 0 -- Asegúrate de que la cantidad sea mayor a 0
+                               FOR JSON AUTO));
 
     -- Eliminar la tabla temporal
     DROP TABLE #Resultado;
@@ -1079,6 +1090,11 @@ BEGIN
     SELECT @Json AS resultado;
 END;
 GO
+
+
+
+
+
 
 
 /*
@@ -1248,6 +1264,31 @@ EXEC INSERTAR_PEDIDO_DETALLES
 ]'
 GO
 */
+
+CREATE OR ALTER PROCEDURE ObtenerCantidadPedidosPorProveedor
+AS
+	 DECLARE @jsonResult NVARCHAR(MAX);
+BEGIN
+    SET NOCOUNT ON;
+	 SELECT @jsonResult = (
+		SELECT 
+			id_proveedor,
+			COUNT(id_pedido) AS cantidad_pedidos
+		FROM 
+			PEDIDOS
+		GROUP BY 
+			id_proveedor
+		FOR JSON PATH);
+
+		SELECT @jsonResult AS cantidad_pedidos_proveedores;
+    SET NOCOUNT OFF;
+END;
+GO
+EXEC ObtenerCantidadPedidosPorProveedor
+
+
+
+/*
 update proveedores set puntaje = 3 where id_proveedor=1
 
 
@@ -1272,3 +1313,5 @@ update PRODUCTOS set stock_actual=0
 
 delete from detalle_pedido
 delete from pedidos
+
+*/

@@ -39,15 +39,15 @@
                 <input type="text" class="form-control" placeholder="Buscar pedidos (código de seguimiento/nombre de proveedor/estado)" [(ngModel)]="searchTerm" i18n-placeholder="@@PipePedidosPlaceholder">
             </div>
             <!-- Filtrar por estados -->
-                <div class="d-flex flex-wrap align-items-center">
-                    <div class="form-check mt-2 me-4" *ngFor="let estado of estadoFiltro | keyvalue">
-                        <input class="form-check-input" type="checkbox" [id]="estado.key" [checked]="estado.value" (change)="toggleEstadoFiltro(estado.key)"
-                            style="width: 20px; height: 20px; margin-right: 5px;">
-                        <label class="form-check-label ms-2" [for]="estado.key"
-                            style="font-size: 1.1em; cursor: pointer;">{{ estado.key }}</label>
-                    </div>
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="form-check mt-2 me-4" *ngFor="let estado of estadoFiltro | keyvalue">
+                    <input class="form-check-input" type="checkbox" [id]="estado.key" [checked]="estado.value" (change)="toggleEstadoFiltro(estado.key)"
+                        style="width: 20px; height: 20px; margin-right: 5px;">
+                    <label class="form-check-label ms-2" [for]="estado.key"
+                        style="font-size: 1.1em; cursor: pointer;">{{ getEstadoTexto(estado.key) }}</label>
                 </div>
             </div>
+            
 
             <!-- Tabla de pedidos -->
             <div class="table-responsive">

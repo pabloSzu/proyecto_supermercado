@@ -86,9 +86,7 @@ CREATE TABLE MOVIMIENTO_PEDIDO (
 CREATE TABLE PRODUCTOS (
     codigo_barra VARCHAR(150) PRIMARY KEY,
     nombre VARCHAR(150),
-    imagen_nombre VARCHAR(150),
     imagen_contenido VARBINARY(MAX),
-    imagen_extension VARCHAR(5),
     stock_actual INT,
     stock_optimo INT,
 );
@@ -120,3 +118,41 @@ CREATE TABLE DETALLE_PEDIDO (
 
  
 		
+
+
+
+
+
+
+
+
+GO
+CREATE OR ALTER TRIGGER tr_UpdateStockOnPedidoEntregado
+ON PEDIDOS
+AFTER UPDATE
+AS
+BEGIN
+    -- Verifica si el estado del pedido se actualizó a 'ENTREGADO'
+    IF UPDATE(codigo_estado)
+    BEGIN
+        -- Declara las variables necesarias
+        DECLARE @id_pedido INT;
+        DECLARE @codigo_estado VARCHAR(20);
+
+        -- Selecciona los pedidos que fueron actualizados a 'ENTREGADO'
+        SELECT @id_pedido = i.id_pedido, @codigo_estado = i.codigo_estado
+        FROM INSERTED i
+        WHERE i.codigo_estado = 'ENTREGADO';
+
+        -- Actualiza el stock_actual en la tabla PRODUCTOS basándose en el DETALLE_PEDIDO
+        IF @codigo_estado = 'ENTREGADO'
+        BEGIN
+            UPDATE p
+            SET p.stock_actual = p.stock_actual + dp.cantidad
+            FROM PRODUCTOS p
+            INNER JOIN DETALLE_PEDIDO dp ON p.codigo_barra = dp.codigo_barra
+            WHERE dp.id_pedido = @id_pedido;
+        END
+    END
+END;
+GO

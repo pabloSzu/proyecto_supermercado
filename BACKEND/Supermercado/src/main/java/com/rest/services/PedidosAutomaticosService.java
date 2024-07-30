@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -282,20 +283,137 @@ public class PedidosAutomaticosService {
                     jsonResponse = repository.guardarNuevoPedido(jsonConIdProveedor);
                     System.out.println("HOLAAAA\n" + jsonConIdProveedor);
                 } catch (Exception e) {
-                    System.out.println("Excepción en insertarPedidos: " + e.getMessage());
+                    System.out.println("Error en insertarPedidos en nuestra base: " + e.getMessage());
                     e.printStackTrace(); // Imprimir la traza completa de la excepción
                 }
 
             }
-            return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+
+            //return new ResponseEntity<>("TODO BIEN", HttpStatus.OK);
+            return  controlarPedidos();
+            
         } catch (Exception e) {
-            System.out.println("Excepción en insertarPedidos: " + e.getMessage());
+            System.out.println("Error en insertarPedidos en los proveedores: " + e.getMessage());
             e.printStackTrace(); // Imprimir la traza completa de la excepción
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    public ResponseEntity<String> controlarPedidos() {
+        Gson gson = new Gson();
+        try {
+            // Obtener proveedores desde la API
+            ResponseEntity<String> proveedoresResponse = getProveedores();
+            String proveedoresJson = proveedoresResponse.getBody();
+
+            if (proveedoresJson == null || proveedoresJson.isEmpty()) {
+                JsonObject errorResponse = new JsonObject();
+                errorResponse.addProperty("error", "La respuesta de proveedores está vacía.");
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(gson.toJson(errorResponse));
+            }
+
+            List<ProveedorBean> proveedores = gson.fromJson(proveedoresJson, new TypeToken<List<ProveedorBean>>() {}.getType());
+
+            List<JsonObject> combinedResponse = new ArrayList<>();
+
+            // Obtener y combinar pedidos del cliente
+            for (ProveedorBean proveedor : proveedores) {
+                String url = proveedor.getNombre_url();
+                String token = proveedor.getToken();
+
+                ServiceClient client = clientFactory.getClient(url);
+                String pedidosJson = client.getPedidos(token, url);
+                JsonArray pedidosArray = gson.fromJson(pedidosJson, JsonArray.class);
+
+                for (JsonElement pedidoElement : pedidosArray) {
+                    JsonObject pedidoObject = pedidoElement.getAsJsonObject();
+                    pedidoObject.addProperty("id_proveedor", proveedor.getId_proveedor());
+                    combinedResponse.add(pedidoObject);
+                }
+            }
+
+            // Obtener las cantidades de pedidos propios desde la base de datos
+            String jsonObtenerCantidadPedidosPorProveedor = repository.getObtenerCantidadPedidosPorProveedor();
+            List<JsonObject> pedidosPropios = gson.fromJson(jsonObtenerCantidadPedidosPorProveedor, new TypeToken<List<JsonObject>>() {}.getType());
+
+            // Contar pedidos del cliente por proveedor
+            Map<Integer, Long> pedidosClientePorProveedor = combinedResponse.stream()
+                    .collect(Collectors.groupingBy(p -> p.get("id_proveedor").getAsInt(), Collectors.counting()));
+
+            // Comparar las cantidades y generar el mensaje en caso de discrepancias
+            StringBuilder mensaje = new StringBuilder();
+            boolean hayDiscrepancias = false;
+
+            for (JsonObject pedidoPropio : pedidosPropios) {
+                int idProveedor = pedidoPropio.get("id_proveedor").getAsInt();
+                long cantidadPropia = pedidoPropio.get("cantidad_pedidos").getAsLong();
+                long cantidadCliente = pedidosClientePorProveedor.getOrDefault(idProveedor, 0L);
+
+                if (cantidadCliente != cantidadPropia) {
+                    hayDiscrepancias = true;
+                    ProveedorBean proveedor = proveedores.stream()
+                            .filter(p -> p.getId_proveedor() == idProveedor)
+                            .findFirst().orElse(null);
+                    if (proveedor != null) {
+                        mensaje.append("LLAMAR AL PROVEEDOR ")
+                                .append(proveedor.getNombre())
+                                .append(" - Se han generado pedidos incorrectos\n");
+                    }
+                }
+            }
+
+            if (hayDiscrepancias) {
+                return new ResponseEntity<>(mensaje.toString(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(" PEDIDOS GENERADOS. No hay discrepancias en los pedidos.", HttpStatus.OK);
+            }
+
+        } catch (JsonSyntaxException e) {
+            JsonObject errorResponse = new JsonObject();
+            errorResponse.addProperty("error", "Error en el formato del JSON: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(gson.toJson(errorResponse));
+        } catch (Exception e) {
+            JsonObject errorResponse = new JsonObject();
+            errorResponse.addProperty("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(gson.toJson(errorResponse));
+        }
+    }
+
+    
         
         
     }

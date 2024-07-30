@@ -1,8 +1,12 @@
 package com.rest.controllers;
 
 import com.rest.services.PedidosAutomaticosService;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.rest.backend.ClientFactory;
 import com.rest.backend.ServiceClient;
 import com.rest.beans.CredencialesBean;
+import com.rest.beans.ProveedorBean;
 import com.rest.repository.SupermercadoRepository;
 import com.rest.services.CredencialesService;
 
@@ -473,6 +481,12 @@ public class SupermercadoController {
 //================================================================================================================================================
     
         
+    
+        
+    
+    
+     
+    
     
     
  }

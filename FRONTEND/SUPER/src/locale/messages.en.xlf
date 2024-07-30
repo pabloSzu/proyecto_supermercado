@@ -391,51 +391,33 @@
         </context-group>
      </trans-unit><trans-unit id="6328557854297686761" datatype="html">
         <source>La URL ya existe en Nuestros Proveedores.</source><target state="final">The URL already exists in Our Providers.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit><trans-unit id="1360239229653742437" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="1360239229653742437" datatype="html">
         <source>El nombre URL no existe.</source><target state="final">The URL name does not exist.</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">83</context></context-group></trans-unit><trans-unit id="7585882933064307270" datatype="html">
+        <source>Error al obtener la lista de proveedores.</source><target state="new">Error al obtener la lista de proveedores.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit><trans-unit id="8986451219438128887" datatype="html">
         <source>¿Seguro que deseas agregar al proveedor ?</source><target state="final">Are you sure you want to add the supplier?</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-      </trans-unit><trans-unit id="2593848525672771807" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">121</context></context-group></trans-unit><trans-unit id="2593848525672771807" datatype="html">
         <source>Sí, agregar proveedor</source><target state="final">Yes, add supplier</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-      </trans-unit><trans-unit id="6820956049668530665" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">126</context></context-group></trans-unit><trans-unit id="6820956049668530665" datatype="html">
         <source>No, no hacer nada</source><target state="final">No, do nothing</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">131</context>
-        </context-group>
-      </trans-unit><trans-unit id="8034803996676777832" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">127</context></context-group></trans-unit><trans-unit id="8034803996676777832" datatype="html">
         <source>Se ha agregado al proveedor</source><target state="final">Provider has been added</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-      </trans-unit><trans-unit id="581361711502274995" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">134</context></context-group></trans-unit><trans-unit id="581361711502274995" datatype="html">
         <source>El proveedor  ha sido agregado. </source><target state="final">Provider has been added </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-      </trans-unit><trans-unit id="3591677550702241811" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/alta-proveedor/alta-proveedor.component.ts</context><context context-type="linenumber">135</context></context-group></trans-unit><trans-unit id="3591677550702241811" datatype="html">
         <source>Detalle del Pedido</source><target state="final">Order Detail</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.html</context>
@@ -583,31 +565,22 @@
 <trans-unit id="6720507694986111120" datatype="html">
   <source>¿Seguro que deseas cancelar el pedido '</source>
   <target state="final">Are you sure you want to cancel the order '</target>
-  <context-group purpose="location">
-    <context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context>
-    <context context-type="linenumber">40</context>
-  </context-group>
-</trans-unit>
+  
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">52</context></context-group></trans-unit>
 <trans-unit id="1954308997183322462" datatype="html">
   <source>Sí, cancelar pedido</source>
   <target state="final">Yes, cancel order</target>
-  <context-group purpose="location">
-    <context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context>
-    <context context-type="linenumber">64</context>
-  </context-group>
-  <context-group purpose="location">
-    <context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context>
-    <context context-type="linenumber">45</context>
-  </context-group>
-</trans-unit>
+  
+  
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">64</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">57</context></context-group></trans-unit>
 <trans-unit id="7534295428364575673" datatype="html">
   <source>No, mantener pedido</source>
   <target state="final">No, keep order</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">46</context></context-group></trans-unit><trans-unit id="223658064168298671" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="223658064168298671" datatype="html">
         <source>Cancelado!</source><target state="final">Cancel!</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">80</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="7726974168237508353" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">80</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">66</context></context-group></trans-unit><trans-unit id="7726974168237508353" datatype="html">
         <source>El pedido </source><target state="final">The order </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context>
@@ -621,38 +594,35 @@
         </context-group>
       </trans-unit><trans-unit id="6937466799106545640" datatype="html">
         <source>El pedido '</source><target state="final">The order '</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-      </trans-unit><trans-unit id="8706970879096002461" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">67</context></context-group></trans-unit><trans-unit id="8706970879096002461" datatype="html">
         <source>No se pudo cancelar el pedido.</source><target state="final">The order can't be cancel.</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">89</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">64</context></context-group></trans-unit><trans-unit id="5492394817395845681" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/detalle_pedido/detalle_pedido.component.ts</context><context context-type="linenumber">89</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">82</context></context-group></trans-unit><trans-unit id="5492394817395845681" datatype="html">
          <source>PENDIENTE</source>
     <target state="translated">PENDING</target>
     
-<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">109</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">52</context></context-group></trans-unit>
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">29</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">52</context></context-group></trans-unit>
 <trans-unit id="311808651014716987" datatype="html">
     <source>EN PROCESO</source>
     <target state="final">IN PROCESS</target>
     
-<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">111</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">54</context></context-group></trans-unit>
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">54</context></context-group></trans-unit>
 <trans-unit id="3447986554285511046" datatype="html">
     <source>ENVIADO</source>
     <target state="final">SHIPPED</target>
     
-<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">113</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">56</context></context-group></trans-unit>
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">56</context></context-group></trans-unit>
 <trans-unit id="304528334456071602" datatype="html">
     <source>ENTREGADO</source>
     <target state="final">DELIVERED</target>
     
-<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">115</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">58</context></context-group></trans-unit>
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">32</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">58</context></context-group></trans-unit>
 <trans-unit id="8286798051826698154" datatype="html">
     <source>CANCELADO</source>
     <target state="final">CANCELLED</target>
     
-<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">117</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="5058759995093392936" datatype="html">
+<context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/listado-pedidos/listado-pedidos.component.ts</context><context context-type="linenumber">33</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/main/pages/proveedor/proveedor.component.ts</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="5058759995093392936" datatype="html">
         <source>Proveedores</source><target state="final">Supliers</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main/pages/listado-proveedores/listado-proveedores.component.html</context>
