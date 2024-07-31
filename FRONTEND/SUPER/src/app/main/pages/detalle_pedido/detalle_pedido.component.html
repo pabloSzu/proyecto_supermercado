@@ -35,7 +35,7 @@
             <div class="card-body">
                 <p class="card-text"><strong><span i18n>ID Pedido:</span></strong> {{ pedido.id_pedido }}</p>
                 <p class="card-text"><strong><span i18n>Código de Seguimiento:</span></strong> {{ pedido.codigo_seguimiento }}</p>
-                <p class="card-text"><strong><span i18n>Fecha de Pedido:</span></strong> {{ pedido.fecha_pedido | date:'medium' }}</p>
+                <p class="card-text"><strong><span i18n>Fecha de Pedido:</span></strong> {{ pedido.fecha_pedido | date:'dd/MM/yyyy HH:mm'  }}</p>
                 <p class="card-text"><strong><span i18n>Estado:</span></strong> {{ pedido.codigo_estado }}</p>
                 <p class="card-text"><strong><span i18n>Evaluación:</span></strong> {{ pedido.evaluacion }}</p>
                 <p class="card-text"><strong><span i18n>Ponderación:</span></strong> {{ pedido.ponderacion }}</p>

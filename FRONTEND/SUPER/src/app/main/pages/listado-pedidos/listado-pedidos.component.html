@@ -76,8 +76,8 @@
                             <td>
                                 <span [ngClass]="getEstadoClass(pedido.codigo_estado)">{{ getEstadoTexto(pedido.codigo_estado) }}</span>
                             </td>
-                            <td>{{ pedido.fecha_entrega_prevista | date:'short' }}</td>
-                            <td>{{ pedido.fecha_pedido | date:'short' }}</td>
+                            <td>{{ pedido.fecha_entrega_prevista | date:'dd/MM/yyyy HH:mm'  }}</td>
+                            <td>{{ pedido.fecha_pedido | date:'dd/MM/yyyy HH:mm'  }}</td>
                             <td>{{ pedido.evaluacion }}</td>
                             <td>{{ pedido.ponderacion }}</td>
                             <td style="color: #000; font-weight: bold;">{{ pedido.total | currency:'USD':'symbol':'1.2-2'  }}</td>

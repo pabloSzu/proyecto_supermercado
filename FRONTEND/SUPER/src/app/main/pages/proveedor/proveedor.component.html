@@ -100,10 +100,10 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let pedido of pedidos">
-                            <td>{{ pedido.fecha_pedido | date:'short' }}</td>
+                            <td>{{ pedido.fecha_pedido | date:'dd/MM/yyyy HH:mm'  }}</td>
                             <td>{{ pedido.codigo_seguimiento }}</td>  
                             <td>{{ getEstadoTexto(pedido.codigo_estado) }}</td>
-                            <td>{{ pedido.fecha_entrega_prevista | date:'short' }}</td>
+                            <td>{{ pedido.fecha_entrega_prevista | date:'dd/MM/yyyy HH:mm'  }}</td>
                             <td class="text-center">{{ pedido.evaluacion }}</td>
                             <td class="text-center">{{ pedido.ponderacion }}</td>
                             <td class="card-text" style="color: #000; font-weight: bold;">
