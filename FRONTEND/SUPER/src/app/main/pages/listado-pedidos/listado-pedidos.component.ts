@@ -4,6 +4,7 @@ import { ServiciosResourceService } from '../../resources/servicios-resource.ser
 import Swal from 'sweetalert2';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalPuntuarComponent } from '../modal-puntuar/modal-puntuar.component';
+import { ModalCancelarComponent } from '../modal-cancelar/modal-cancelar.component';
 
 @Component({
   selector: 'app-listado-pedidos',
@@ -48,6 +49,24 @@ export class ListadoPedidosComponent implements OnInit {
   }
 
   cancelarPedido(pedido: any): void {
+    console.log("PEDIDO: "+JSON.stringify(pedido));
+
+//ACA APLICO LA NUEVA IMPLEMENTACION
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (pedido.id_proveedor == 1){
+      console.log("PEDIDO  id_proveedor:  "+pedido.id_proveedor);
+      const modalRef = this._modal.open(ModalCancelarComponent);
+      modalRef.componentInstance.pedido = pedido; // Pasa el objeto pedido al componente del modal
+      const index = this.pedidosOriginales.findIndex(p => p.codigo_seguimiento === pedido.codigo_seguimiento);
+            if (index !== -1) {
+              this.pedidosOriginales[index].codigo_estado = 'CANCELADO';
+              this.aplicarFiltro(); // Aplica el filtro después de actualizar
+            }
+    }else{
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     Swal.fire({
       title: $localize`¿Seguro que deseas cancelar el pedido '` + pedido["codigo_seguimiento"] + `' ?`,
       icon: 'warning',
@@ -87,6 +106,7 @@ export class ListadoPedidosComponent implements OnInit {
       }
     });
   }
+}
 
   actualizarPedidos(): void {
     this._service.getPedidos().subscribe({

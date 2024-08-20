@@ -15,6 +15,7 @@ import { AltaProveedorComponent } from './pages/alta-proveedor/alta-proveedor.co
 import { SearchPedidosPipe } from './pipe/search-pedidos.pipe';
 import { SearchPedidosCodigoEstadoPipe } from './pipe/search-pedidos-codigo-estado.pipe';
 import { ProveedorProductosYRankingComponent } from './pages/proveedor-productos-y-ranking/proveedor-productos-y-ranking.component';
+import { ModalCancelarComponent } from './pages/modal-cancelar/modal-cancelar.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ProveedorProductosYRankingComponent } from './pages/proveedor-productos
     AltaProveedorComponent,
     SearchPedidosPipe,
     SearchPedidosCodigoEstadoPipe,
-    ProveedorProductosYRankingComponent
+    ProveedorProductosYRankingComponent,
+    ModalCancelarComponent
   ],
   imports: [
     CommonModule,
